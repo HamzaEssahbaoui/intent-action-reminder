@@ -1,9 +1,11 @@
 package com.intentaction.reminder
 
-import AppDatabase
+
 import android.content.Context
 import androidx.room.Room
+import com.intentaction.reminder.db.AppDatabase
 import com.intentaction.reminder.db.dao.ActionIntentDao
+import com.intentaction.reminder.repository.IntentRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,17 +20,18 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "action_intent_database"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        return AppDatabase.getInstance(context)
     }
 
     @Provides
     fun provideIntentDao(appDatabase: AppDatabase): ActionIntentDao {
         return appDatabase.intentDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideIntentRepository(actionIntentDao: ActionIntentDao): IntentRepository {
+        return IntentRepository(actionIntentDao)
+    }
 }
+

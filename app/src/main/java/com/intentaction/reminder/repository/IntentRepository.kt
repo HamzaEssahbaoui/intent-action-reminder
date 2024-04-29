@@ -2,10 +2,9 @@ package com.intentaction.reminder.repository
 
 import com.intentaction.reminder.db.dao.ActionIntentDao
 import com.intentaction.reminder.db.entity.IntentAction
+import javax.inject.Inject
 
-class IntentRepository(private val actionIntentDao: ActionIntentDao) {
-
-
+class IntentRepository @Inject constructor (private val actionIntentDao: ActionIntentDao) {
 
 
     fun getIntents() = actionIntentDao.getAllIntents()

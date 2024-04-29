@@ -1,5 +1,6 @@
 package com.intentaction.reminder.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,14 +13,22 @@ import javax.inject.Inject
 @HiltViewModel
 class IntentActionViewModel @Inject constructor(
     private val intentRepository: IntentRepository
+
 ) : ViewModel() {
 
-
+    val TAG: String = "IntentActionViewModel" // This is a constant, so it should be declared with val
 
 
     // suspended functions are used to perform long-running tasks, they return a result
+
+
     fun addIntent(intentAction: IntentAction) = viewModelScope.launch {
-        intentRepository.insertIntent(intentAction)
+
+        try {
+            intentRepository.insertIntent(intentAction)
+        } catch (e: Exception) {
+            Log.d(TAG, "Error inserting intent: ${e.message}")
+        }
     }
 
     // Other methods for updating and deleting intents
@@ -28,7 +37,11 @@ class IntentActionViewModel @Inject constructor(
     }
 
     fun updateIntent(intentAction: IntentAction?) = viewModelScope.launch {
-        intentRepository.updateIntent(intentAction!!)
+        intentAction?.let {
+            intentRepository.updateIntent(it)
+        } ?: run {
+            // Handle the case where intentAction is null, if necessary
+        }
     }
 
     fun deleteIntent(intentAction: IntentAction) = viewModelScope.launch {

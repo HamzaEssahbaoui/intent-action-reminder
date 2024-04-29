@@ -22,7 +22,7 @@ class ReminderScheduler(private val context: Context) {
             putExtra("INTENT_QUOTE", intentAction.quote)
         }
 
-        val pendingIntent = PendingIntent.getBroadcast(context, intentAction.id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(context, intentAction.id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }

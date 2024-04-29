@@ -10,7 +10,9 @@ import com.intentaction.reminder.R
 import com.intentaction.reminder.adapter.IntentActionAdapter
 import com.intentaction.reminder.viewmodel.IntentActionViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainScreen : AppCompatActivity() {
     private val viewModel: IntentActionViewModel by viewModels()
 

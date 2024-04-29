@@ -26,11 +26,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+    kapt {
+        correctErrorTypes true
     }
 }
 
@@ -45,15 +48,17 @@ dependencies {
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
 
+    // Hilt
     implementation libs.hilt.android
-    annotationProcessor libs.hilt.android.compiler
-    implementation libs.androidx.hilt.lifecycle.viewmodel
-    annotationProcessor libs.androidx.hilt.compiler
+    kapt libs.hilt.android.testing
+    kapt libs.hilt.android.compiler
+
+    // ViewModel
     implementation libs.androidx.lifecycle.livedata.ktx
 
     // Room components
     implementation libs.androidx.room.runtime
-    annotationProcessor libs.androidx.room.compiler
+    kapt libs.androidx.room.compiler
     // Optional - Kotlin Extensions and Coroutines support for Room
     implementation libs.androidx.room.ktx
 
@@ -63,4 +68,3 @@ dependencies {
     // Navigation Compose
     implementation libs.androidx.navigation.compose
 }
-apply plugin: 'dagger.hilt.android.plugin'

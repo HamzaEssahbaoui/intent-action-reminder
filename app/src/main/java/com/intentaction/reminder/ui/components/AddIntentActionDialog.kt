@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +18,7 @@ import java.util.*
 
 class AddIntentActionDialog(private val viewModel: IntentActionViewModel) : DialogFragment() {
 
+    val TAG: String = "AddIntentActionDialog" // This is a constant, so it should be declared with val
     @SuppressLint("MissingInflatedId")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -71,7 +73,13 @@ class AddIntentActionDialog(private val viewModel: IntentActionViewModel) : Dial
 
 
                     // Pass the IntentAction object to the ViewModel
-                    viewModel.addIntent(intentAction)
+                    try {
+                        viewModel.addIntent(intentAction)
+                        Log.v(TAG, "IntentAction added :$intentAction")
+
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Error adding intent: ${e.message}")
+                    }
                 }
                 .setNegativeButton(R.string.cancel) { _, _ ->
                     dialog?.cancel()

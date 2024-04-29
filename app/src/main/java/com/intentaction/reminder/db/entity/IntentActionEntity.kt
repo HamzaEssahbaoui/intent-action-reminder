@@ -3,7 +3,7 @@ package com.intentaction.reminder.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "intents")
+@Entity(tableName = "intent_actions" )
 data class IntentAction(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
