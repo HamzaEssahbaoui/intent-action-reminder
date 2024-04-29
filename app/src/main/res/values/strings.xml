@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Reminder</string>
+    <string name="add_intent">Add Intent</string>
+    <string name="intent_name">Intent Name</string>
+    <string name="meaningful_quote">Meaningful Quote</string>
+    <string name="category">Category</string>
+    <string name="pre_reminder_time">Pre-Reminder Time</string>
+    <string name="urgent_reminder_time">Urgent Reminder Time</string>
+    <string name="confirmation_reminder_time">Confirmation Reminder Time</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+</resources>
