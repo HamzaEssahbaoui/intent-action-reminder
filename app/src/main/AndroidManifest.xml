@@ -5,8 +5,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"
-        tools:ignore="ExactAlarm" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
 
     <application
         android:name=".IntentAction"
@@ -39,7 +38,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intentAction.action.BOOT_COMPLETED"/>
-                <action android:name="reminder.ACTION_REMINDER"/>
+                <action android:name="com.intentaction.reminder.ACTION_REMINDER"/>
             </intent-filter>
         </receiver>
     </application>

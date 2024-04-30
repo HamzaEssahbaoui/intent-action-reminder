@@ -40,11 +40,11 @@
         fun getIntentById(id: Int): LiveData<IntentAction>
 
         // get intent in a specific date range
-        @Query("SELECT * FROM intent_actions WHERE urgentReminderTime BETWEEN :startDate AND :endDate")
+        @Query("SELECT * FROM intent_actions WHERE dueDate BETWEEN :startDate AND :endDate")
         fun getIntentsInDateRange(startDate: Long, endDate: Long): LiveData<List<IntentAction>>
 
         // get all intents with a specific status and in a specific date range
-        @Query("SELECT * FROM intent_actions WHERE status = :status AND urgentReminderTime BETWEEN :startDate AND :endDate")
+        @Query("SELECT * FROM intent_actions WHERE status = :status AND dueDate BETWEEN :startDate AND :endDate")
         fun getIntentsByStatusInDateRange(status: String, startDate: Long, endDate: Long): LiveData<List<IntentAction>>
 
 

@@ -14,9 +14,9 @@ class IntentRepository @Inject constructor (private val actionIntentDao: ActionI
     }
 
     // update the intentAction status
-    suspend fun updateIntentStatus(intentAction: IntentAction, newStatus: String) {
-        val updatedIntent = intentAction.copy(status = newStatus)
-        actionIntentDao.updateIntent(updatedIntent)
+    suspend fun updateIntentStatus(intentAction: IntentAction?, newStatus: String) {
+        val updatedIntent = intentAction?.copy(status = newStatus)
+        actionIntentDao.updateIntent(updatedIntent!!)
     }
 
 

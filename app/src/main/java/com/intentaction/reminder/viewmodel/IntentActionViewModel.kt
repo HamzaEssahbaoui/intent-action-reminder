@@ -32,7 +32,7 @@ class IntentActionViewModel @Inject constructor(
     }
 
     // Other methods for updating and deleting intents
-    fun updateIntentStatus(intentAction: IntentAction, newStatus: String) = viewModelScope.launch {
+    fun updateIntentStatus(intentAction: IntentAction?, newStatus: String) = viewModelScope.launch {
         intentRepository.updateIntentStatus(intentAction, newStatus)
     }
 
@@ -44,8 +44,10 @@ class IntentActionViewModel @Inject constructor(
         }
     }
 
-    fun deleteIntent(intentAction: IntentAction) = viewModelScope.launch {
-        intentRepository.deleteIntent(intentAction)
+    fun deleteIntent(intentAction: IntentAction?) = viewModelScope.launch {
+        if (intentAction != null) {
+            intentRepository.deleteIntent(intentAction)
+        }
     }
 
     // other functions for getting intents, they return LiveData objects

@@ -5,18 +5,20 @@ import androidx.room.TypeConverters
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.intentaction.reminder.db.AppDatabase.Companion.DATABASE_VERSION
 import com.intentaction.reminder.db.dao.ActionIntentDao
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.helpers.Converters
+import com.intentaction.reminder.db.converters.Converters
+import com.intentaction.reminder.db.converters.DateTimeConverter
 
-@Database(entities = [IntentAction::class], version = 1)
+@Database(entities = [IntentAction::class], version = DATABASE_VERSION, exportSchema = false)
 @TypeConverters(Converters::class) // Include this if you have custom type converters
 abstract class AppDatabase : RoomDatabase() {
     abstract fun intentDao(): ActionIntentDao
 
     companion object {
-        const val DATABASE_VERSION = 8
-        const val DATABASE_NAME = "action_intent_database"
+        const val DATABASE_VERSION = 2
+        private const val DATABASE_NAME = "action_intent_database"
 
         private var instance: AppDatabase? = null
 
