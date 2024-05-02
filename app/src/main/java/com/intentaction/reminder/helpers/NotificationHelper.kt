@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.intentaction.reminder.db.entity.IntentAction
 import com.intentaction.reminder.ui.screens.IntentActionDetailsScreen
 
 object NotificationHelper {
@@ -15,7 +16,7 @@ object NotificationHelper {
     private const val CHANNEL_NAME = "Reminder Notifications"
     private const val CHANNEL_DESCRIPTION = "Notifications for reminders"
 
-    fun createNotification(context: Context, intentAction: com.intentaction.reminder.db.entity.IntentAction, icon: Int) {
+    fun createNotification(context: Context, intentAction: IntentAction, icon: Int) {
         createNotificationChannel(context)
 
         val notificationIntent = Intent(context, IntentActionDetailsScreen::class.java).apply {

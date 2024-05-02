@@ -1,19 +1,23 @@
 package com.intentaction.reminder.viewmodel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.intentaction.reminder.db.converters.DateTimeConverter
 import kotlinx.coroutines.launch
 import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.helpers.ReminderScheduler
 import com.intentaction.reminder.repository.IntentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class IntentActionViewModel @Inject constructor(
-    private val intentRepository: IntentRepository
-
+    private val intentRepository: IntentRepository ,
+    private val reminderScheduler: ReminderScheduler
 ) : ViewModel() {
 
     val TAG: String = "IntentActionViewModel" // This is a constant, so it should be declared with val
@@ -32,9 +36,19 @@ class IntentActionViewModel @Inject constructor(
     }
 
     // Other methods for updating and deleting intents
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updateIntentStatus(intentAction: IntentAction?, newStatus: String) = viewModelScope.launch {
         intentRepository.updateIntentStatus(intentAction, newStatus)
+       /*
+        cancel reminder when user dismissed
+        ***
+        if (intentAction?.status == "unfulfilled"){
+            DateTimeConverter.fromZonedDateTimeToMillis(intentAction.dueDate)
+                ?.let { reminderScheduler.cancelAlarm(intentAction , it) }
+        } */
     }
+
+
 
     fun updateIntent(intentAction: IntentAction?) = viewModelScope.launch {
         intentAction?.let {

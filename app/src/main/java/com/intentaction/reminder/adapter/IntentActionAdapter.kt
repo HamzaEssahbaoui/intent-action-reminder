@@ -23,6 +23,7 @@ class IntentActionAdapter(private val viewModel: IntentActionViewModel) :
         return IntentViewHolder.create(parent, viewModel)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: IntentViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(current)

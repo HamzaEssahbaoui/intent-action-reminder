@@ -27,8 +27,6 @@ class ReminderScheduler(private val context: Context) {
         val alarmIntent = Intent(context, ReminderBroadcastReceiver::class.java).apply {
             action = ReminderBroadcastReceiver.ACTION_REMINDER
             putExtra("INTENT_ID", intentAction.id)
-            putExtra("INTENT_TITLE", intentAction.name)
-            putExtra("INTENT_QUOTE", intentAction.quote)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(context, intentAction.id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
@@ -37,10 +35,12 @@ class ReminderScheduler(private val context: Context) {
     }
 
 
-    private fun cancelAlarm(intentAction: IntentAction, time: Long) {
+     fun cancelAlarm(intentAction: IntentAction?) {
         val alarmIntent = Intent(context, ReminderBroadcastReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, intentAction.id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = intentAction?.let { PendingIntent.getBroadcast(context, it.id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT) }
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pendingIntent)
+         if (pendingIntent != null) {
+             alarmManager.cancel(pendingIntent)
+         }
     }
 }

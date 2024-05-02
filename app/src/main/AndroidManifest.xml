@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
 
     <application
-        android:name=".IntentAction"
+        android:name=".IntentActionApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -37,7 +37,7 @@
         <receiver android:name=".receivers.ReminderBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intentAction.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="com.intentaction.reminder.ACTION_REMINDER"/>
             </intent-filter>
         </receiver>

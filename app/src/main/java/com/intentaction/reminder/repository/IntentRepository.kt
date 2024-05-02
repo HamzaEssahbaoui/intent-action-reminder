@@ -2,9 +2,14 @@ package com.intentaction.reminder.repository
 
 import com.intentaction.reminder.db.dao.ActionIntentDao
 import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.helpers.ReminderScheduler
 import javax.inject.Inject
 
-class IntentRepository @Inject constructor (private val actionIntentDao: ActionIntentDao) {
+class IntentRepository @Inject constructor (
+    private val actionIntentDao: ActionIntentDao,
+    private val reminderScheduler: ReminderScheduler
+)
+{
 
 
     fun getIntents() = actionIntentDao.getAllIntents()
@@ -18,6 +23,13 @@ class IntentRepository @Inject constructor (private val actionIntentDao: ActionI
         val updatedIntent = intentAction?.copy(status = newStatus)
         actionIntentDao.updateIntent(updatedIntent!!)
     }
+
+    suspend fun dissmisIntent(intentAction: IntentAction?){
+        val updatedIntent = intentAction?.copy(status = "dissmised")
+        actionIntentDao.updateIntent(updatedIntent!!)
+        reminderScheduler.cancelAlarm(intentAction)
+    }
+
 
 
     suspend fun updateIntent(intentAction: IntentAction) {
