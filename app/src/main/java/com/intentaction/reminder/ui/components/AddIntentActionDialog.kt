@@ -1,4 +1,4 @@
-package com.intentaction.reminder.ui.screens
+package com.intentaction.reminder.ui.components
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -13,16 +13,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.intentaction.reminder.R
-import com.intentaction.reminder.db.converters.Converters
 import com.intentaction.reminder.db.converters.DateTimeConverter
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.helpers.ReminderScheduler
 import com.intentaction.reminder.viewmodel.IntentActionViewModel
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-class AddIntentActionDialog(private val viewModel: IntentActionViewModel) : DialogFragment() {
+class AddIntentActionDialog constructor(
+    private val viewModel: IntentActionViewModel
+) : DialogFragment() {
 
     val TAG: String = "AddIntentActionDialog" // This is a constant, so it should be declared with val
     @RequiresApi(Build.VERSION_CODES.O)
@@ -41,9 +40,6 @@ class AddIntentActionDialog(private val viewModel: IntentActionViewModel) : Dial
             }
 
 
-
-
-
             builder.setView(view)
                 .setPositiveButton(R.string.save) { _, _ ->
                     val name = view.findViewById<EditText>(R.id.name).text.toString()
@@ -60,16 +56,9 @@ class AddIntentActionDialog(private val viewModel: IntentActionViewModel) : Dial
                         status = "unfulfilled" // default status
                     )
 
-                    // Setup the ReminderScheduler
-                    val reminderScheduler = ReminderScheduler(requireContext())
-                    reminderScheduler.scheduleIntents(intentAction)
-
-
-
                     // Pass the IntentAction object to the ViewModel
                     try {
                         viewModel.addIntent(intentAction)
-                        Log.v(TAG, "IntentAction added :$intentAction")
 
                     } catch (e: Exception) {
                         Log.d(TAG, "Error adding intent: ${e.message}")

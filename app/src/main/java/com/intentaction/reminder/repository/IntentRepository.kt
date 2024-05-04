@@ -1,21 +1,30 @@
 package com.intentaction.reminder.repository
 
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.intentaction.reminder.db.dao.ActionIntentDao
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.helpers.ReminderScheduler
+import com.intentaction.reminder.services.SchedulerService
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class IntentRepository @Inject constructor (
+    @ApplicationContext
+    private val context: Context,
     private val actionIntentDao: ActionIntentDao,
-    private val reminderScheduler: ReminderScheduler
+    private val schedulerService: SchedulerService
 )
 {
 
 
     fun getIntents() = actionIntentDao.getAllIntents()
 
-    suspend fun insertIntent(intentAction: IntentAction) {
-        actionIntentDao.insertIntent(intentAction)
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun insertIntent(intentAction: IntentAction): IntentAction {
+        val generatedId = actionIntentDao.insertIntent(intentAction)
+        intentAction.id = generatedId.toInt()
+        return intentAction
     }
 
     // update the intentAction status
@@ -24,11 +33,20 @@ class IntentRepository @Inject constructor (
         actionIntentDao.updateIntent(updatedIntent!!)
     }
 
-    suspend fun dissmisIntent(intentAction: IntentAction?){
-        val updatedIntent = intentAction?.copy(status = "dissmised")
-        actionIntentDao.updateIntent(updatedIntent!!)
-        reminderScheduler.cancelAlarm(intentAction)
+    suspend fun dismissIntent(intentAction: IntentAction?): Result<Unit> {
+        return try {
+            intentAction?.let {
+                val updatedIntent = it.copy(status = "dismissed")
+                actionIntentDao.updateIntent(updatedIntent)
+                schedulerService.cancelAlarm(it)
+                Result.success(Unit) // Indicate success
+            } ?: Result.failure(Exception("IntentAction was null"))
+        } catch (e: Exception) {
+            // Handle any exceptions that occur during database access or alarm cancellation
+            Result.failure(e)
+        }
     }
+
 
 
 
@@ -50,7 +68,7 @@ class IntentRepository @Inject constructor (
     fun getIntentsByStatusAndCategory(status: String, category: String) = actionIntentDao.getIntentsByStatusAndCategory(status, category)
 
     // get intent by id
-    fun getIntentById(id: Int) = actionIntentDao.getIntentById(id)
+    suspend fun getIntentById(id: Int) = actionIntentDao.getIntentById(id)
 
     // get intent in a specific date range
     fun getIntentsInDateRange(startDate: Long, endDate: Long) = actionIntentDao.getIntentsInDateRange(startDate, endDate)

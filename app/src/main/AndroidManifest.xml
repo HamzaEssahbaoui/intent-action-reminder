@@ -35,7 +35,7 @@
         </intent-filter>
     </activity>
         <receiver android:name=".receivers.ReminderBroadcastReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="com.intentaction.reminder.ACTION_REMINDER"/>

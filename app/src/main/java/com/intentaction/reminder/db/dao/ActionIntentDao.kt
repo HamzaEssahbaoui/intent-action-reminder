@@ -12,7 +12,7 @@
     @Dao
     interface ActionIntentDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        suspend fun insertIntent(intentAction: IntentAction)
+        suspend fun insertIntent(intentAction: IntentAction): Long
 
         @Update
         suspend fun updateIntent(intentAction: IntentAction)
@@ -37,7 +37,7 @@
 
         // get intent by id
         @Query("SELECT * FROM intent_actions WHERE id = :id")
-        fun getIntentById(id: Int): LiveData<IntentAction>
+        fun getIntentById(id: Int): IntentAction?
 
         // get intent in a specific date range
         @Query("SELECT * FROM intent_actions WHERE dueDate BETWEEN :startDate AND :endDate")

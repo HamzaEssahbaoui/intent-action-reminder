@@ -6,34 +6,35 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.intentaction.reminder.db.converters.DateTimeConverter
 import kotlinx.coroutines.launch
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.helpers.ReminderScheduler
+import com.intentaction.reminder.services.SchedulerService
 import com.intentaction.reminder.repository.IntentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class IntentActionViewModel @Inject constructor(
-    private val intentRepository: IntentRepository ,
-    private val reminderScheduler: ReminderScheduler
+    private val intentRepository: IntentRepository,
+    private val schedulerService: SchedulerService
 ) : ViewModel() {
 
     val TAG: String = "IntentActionViewModel" // This is a constant, so it should be declared with val
 
 
-    // suspended functions are used to perform long-running tasks, they return a result
-
-
+    // Add a new intentAction to the database
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addIntent(intentAction: IntentAction) = viewModelScope.launch {
-
         try {
-            intentRepository.insertIntent(intentAction)
+            val updatedIntentAction = intentRepository.insertIntent(intentAction)
+            schedulerService.scheduleIntents(updatedIntentAction)
+            Log.v("ReminderLifeCycle", "IntentAction added with ID: ${updatedIntentAction.id} ,name : ${updatedIntentAction.name} , dueDate : ${updatedIntentAction.dueDate} , status : ${updatedIntentAction.status} , category : ${updatedIntentAction.category}")
         } catch (e: Exception) {
-            Log.d(TAG, "Error inserting intent: ${e.message}")
+            Log.d(TAG, "Error adding intent: ${e.message}")
         }
     }
+
+
 
     // Other methods for updating and deleting intents
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,8 +45,12 @@ class IntentActionViewModel @Inject constructor(
         ***
         if (intentAction?.status == "unfulfilled"){
             DateTimeConverter.fromZonedDateTimeToMillis(intentAction.dueDate)
-                ?.let { reminderScheduler.cancelAlarm(intentAction , it) }
+                ?.let { schedulerService.cancelAlarm(intentAction , it) }
         } */
+    }
+
+    fun dismissIntent(intentAction: IntentAction?) = viewModelScope.launch {
+        intentRepository.dismissIntent(intentAction)
     }
 
 
@@ -68,7 +73,7 @@ class IntentActionViewModel @Inject constructor(
 
     val intents: LiveData<List<IntentAction>> = intentRepository.getIntents()
 
-    fun getIntentById(id: Int) = intentRepository.getIntentById(id)
+    suspend fun getIntentById(id: Int) = intentRepository.getIntentById(id)
 
 
     fun getIntentsByStatus(status: String) = intentRepository.getIntentsByStatus(status)

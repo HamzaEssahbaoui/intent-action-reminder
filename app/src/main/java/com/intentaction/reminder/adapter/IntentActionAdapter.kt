@@ -50,7 +50,7 @@ class IntentActionAdapter(private val viewModel: IntentActionViewModel) :
             }
 
             dismissButton.setOnClickListener {
-                viewModel.updateIntentStatus(intentAction, "fulfilled")
+                viewModel.dismissIntent(intentAction)
             }
 
             deleteButton.setOnClickListener {

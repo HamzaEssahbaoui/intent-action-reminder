@@ -8,7 +8,8 @@ import java.time.ZonedDateTime
 
 @Entity(tableName = "intent_actions" )
 data class IntentAction(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     val name: String? = null,
     val quote: String? = null,
     val category: String? = null,
