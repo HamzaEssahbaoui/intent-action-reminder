@@ -2,10 +2,12 @@ package com.intentaction.reminder
 
 
 import android.content.Context
+import androidx.room.Room
 import com.intentaction.reminder.db.AppDatabase
 import com.intentaction.reminder.db.dao.ActionIntentDao
-import com.intentaction.reminder.services.SchedulerService
 import com.intentaction.reminder.repository.IntentRepository
+import com.intentaction.reminder.repository.IntentRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,27 +17,27 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+internal interface DatabaseModule {
 
-    @Provides
-    @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.getInstance(context)
-    }
+    @Binds
+    fun intentRepository(
+        repo: IntentRepositoryImpl
+    ): IntentRepository
 
-    @Provides
-    fun provideIntentDao(appDatabase: AppDatabase): ActionIntentDao {
-        return appDatabase.intentDao()
-    }
+    companion object {
+        @Provides
+        @Singleton
+        fun provideAppDatabase(
+            @ApplicationContext context: Context
+        ): AppDatabase = Room.databaseBuilder(
+            context = context.applicationContext,
+            klass = AppDatabase::class.java,
+            name = "action_intent_database"
+        ).fallbackToDestructiveMigration()
+            .build()
 
-    @Provides
-    fun provideIntentRepository(
-        @ApplicationContext
-        context: Context,
-        actionIntentDao: ActionIntentDao,
-        schedulerService: SchedulerService
-    ): IntentRepository {
-        return IntentRepository(context,actionIntentDao, schedulerService)
+        @Provides
+        fun provideIntentDao(appDatabase: AppDatabase): ActionIntentDao = appDatabase.intentDao()
     }
 }
 

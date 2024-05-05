@@ -1,86 +1,52 @@
 package com.intentaction.reminder.repository
 
-import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.intentaction.reminder.db.dao.ActionIntentDao
+import androidx.lifecycle.LiveData
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.services.SchedulerService
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class IntentRepository @Inject constructor (
-    @ApplicationContext
-    private val context: Context,
-    private val actionIntentDao: ActionIntentDao,
-    private val schedulerService: SchedulerService
-)
-{
+interface IntentRepository {
 
+    fun getIntents(): LiveData<List<IntentAction>>
 
-    fun getIntents() = actionIntentDao.getAllIntents()
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun insertIntent(intentAction: IntentAction): IntentAction {
-        val generatedId = actionIntentDao.insertIntent(intentAction)
-        intentAction.id = generatedId.toInt()
-        return intentAction
-    }
+    suspend fun insertIntent(intentAction: IntentAction): IntentAction
 
     // update the intentAction status
-    suspend fun updateIntentStatus(intentAction: IntentAction?, newStatus: String) {
-        val updatedIntent = intentAction?.copy(status = newStatus)
-        actionIntentDao.updateIntent(updatedIntent!!)
-    }
+    suspend fun updateIntentStatus(intentAction: IntentAction?, newStatus: String)
 
-    suspend fun dismissIntent(intentAction: IntentAction?): Result<Unit> {
-        return try {
-            intentAction?.let {
-                val updatedIntent = it.copy(status = "dismissed")
-                actionIntentDao.updateIntent(updatedIntent)
-                schedulerService.cancelAlarm(it)
-                Result.success(Unit) // Indicate success
-            } ?: Result.failure(Exception("IntentAction was null"))
-        } catch (e: Exception) {
-            // Handle any exceptions that occur during database access or alarm cancellation
-            Result.failure(e)
-        }
-    }
+    suspend fun dismissIntent(intentAction: IntentAction?): Result<Unit>
 
+    suspend fun updateIntent(intentAction: IntentAction)
 
-
-
-    suspend fun updateIntent(intentAction: IntentAction) {
-        actionIntentDao.updateIntent(intentAction)
-    }
     // delete intentAction
-    suspend fun deleteIntent(intentAction: IntentAction) {
-        actionIntentDao.deleteIntent(intentAction)
-    }
+    suspend fun deleteIntent(intentAction: IntentAction)
 
     // get all intents with a specific status
-    fun getIntentsByStatus(status: String) = actionIntentDao.getIntentsByStatus(status)
+    fun getIntentsByStatus(status: String): LiveData<List<IntentAction>>
 
     // get all intents with a specific category
-    fun getIntentsByCategory(category: String) = actionIntentDao.getIntentsByCategory(category)
+    fun getIntentsByCategory(category: String): LiveData<List<IntentAction>>
 
     // get all intents with a specific status and category
-    fun getIntentsByStatusAndCategory(status: String, category: String) = actionIntentDao.getIntentsByStatusAndCategory(status, category)
+    fun getIntentsByStatusAndCategory(
+        status: String,
+        category: String
+    ): LiveData<List<IntentAction>>
 
     // get intent by id
-    suspend fun getIntentById(id: Int) = actionIntentDao.getIntentById(id)
+    suspend fun getIntentById(id: Int): IntentAction?
 
     // get intent in a specific date range
-    fun getIntentsInDateRange(startDate: Long, endDate: Long) = actionIntentDao.getIntentsInDateRange(startDate, endDate)
+    fun getIntentsInDateRange(startDate: Long, endDate: Long): LiveData<List<IntentAction>>
 
     // get all intents with a specific status and in a specific date range
-    fun getIntentsByStatusInDateRange(status: String, startDate: Long, endDate: Long) = actionIntentDao.getIntentsByStatusInDateRange(status, startDate, endDate)
+    fun getIntentsByStatusInDateRange(
+        status: String,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<List<IntentAction>>
 
 
     // get all the unfulfilled intents
 
+    suspend fun getUnfulfilledIntents(): List<IntentAction>
 
-    suspend fun getUnfulfilledIntents(): List<IntentAction> {
-        return actionIntentDao.getUnfulfilledIntents()
-    }
 }
