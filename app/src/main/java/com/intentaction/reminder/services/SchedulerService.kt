@@ -1,71 +1,11 @@
 package com.intentaction.reminder.services
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.intentaction.reminder.db.converters.DateTimeConverter
+
 import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.receivers.ReminderBroadcastReceiver
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class SchedulerService @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
-) {
-    val TAG = "SchedulerService"
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun scheduleIntents(intentAction: IntentAction) {
+interface SchedulerService {
 
-        DateTimeConverter.fromZonedDateTimeToMillis(intentAction.dueDate)?.let {
-            scheduleIntentAlarm(it, intentAction)
-        }
-    }
+    fun scheduleIntents(intentAction: IntentAction)
 
+    fun cancelAlarm(intentAction: IntentAction?)
 
-
-    private fun scheduleIntentAlarm(time: Long, intentAction: IntentAction) {
-        val alarmIntent = Intent(
-            context,
-            ReminderBroadcastReceiver::class.java
-        )
-            .apply {
-                action = ReminderBroadcastReceiver.ACTION_REMINDER
-                putExtra("INTENT_ID", intentAction.id)
-        }
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            intentAction.id,
-            alarmIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent
-        )
-    }
-
-
-     fun cancelAlarm(intentAction: IntentAction?) {
-        val alarmIntent = Intent(context, ReminderBroadcastReceiver::class.java)
-        val pendingIntent = intentAction?.let {
-            PendingIntent.getBroadcast(
-                context,
-                it.id,
-                alarmIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-        }
-         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-         if (pendingIntent != null) {
-             alarmManager.cancel(pendingIntent)
-         }
-    }
 }

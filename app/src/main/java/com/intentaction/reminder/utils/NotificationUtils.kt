@@ -1,4 +1,4 @@
-package com.intentaction.reminder.services
+package com.intentaction.reminder.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.intentaction.reminder.db.entity.IntentAction
 import com.intentaction.reminder.ui.screens.IntentActionDetailsScreen
 
-object NotificationService {
+object NotificationUtils {
 
     private const val CHANNEL_ID = "REMINDER_CHANNEL_ID"
     private const val CHANNEL_NAME = "Reminder Notifications"
@@ -64,7 +64,7 @@ object NotificationService {
                 CHANNEL_ID,
                 CHANNEL_NAME,
                 importance
-                )
+            )
                 .apply {
                     description = CHANNEL_DESCRIPTION
                 }

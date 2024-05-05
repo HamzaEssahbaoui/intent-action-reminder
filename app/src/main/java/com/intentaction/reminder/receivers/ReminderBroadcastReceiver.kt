@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.intentaction.reminder.R
 import com.intentaction.reminder.repository.IntentRepository
-import com.intentaction.reminder.services.NotificationService
 import com.intentaction.reminder.services.SchedulerService
+import com.intentaction.reminder.utils.NotificationUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -65,7 +65,7 @@ class ReminderBroadcastReceiver : HiltBroadcastReceiver() {
 
             if (reminderIntent != null) {
                 Log.d(TAG, "Reminder Intent found: $reminderIntent")
-                NotificationService.createNotification(
+                NotificationUtils.createNotification(
                     context,
                     reminderIntent,
                     R.drawable.ic_launcher_foreground
