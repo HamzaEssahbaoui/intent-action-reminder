@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "reminder-x-1"
-include ':app'
+include(":app")
