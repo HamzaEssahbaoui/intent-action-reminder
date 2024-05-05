@@ -7,6 +7,8 @@ import com.intentaction.reminder.db.AppDatabase
 import com.intentaction.reminder.db.dao.ActionIntentDao
 import com.intentaction.reminder.repository.IntentRepository
 import com.intentaction.reminder.repository.IntentRepositoryImpl
+import com.intentaction.reminder.services.SchedulerService
+import com.intentaction.reminder.services.SchedulerServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,6 +25,11 @@ internal interface DatabaseModule {
     fun intentRepository(
         repo: IntentRepositoryImpl
     ): IntentRepository
+
+    @Binds
+    fun schedulerService(
+        serviceImpl: SchedulerServiceImpl
+    ): SchedulerService
 
     companion object {
         @Provides
