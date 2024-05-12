@@ -10,8 +10,8 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.intentaction.reminder.R
-import com.intentaction.reminder.adapter.IntentActionAdapter
-import com.intentaction.reminder.viewmodel.IntentActionViewModel
+import com.intentaction.reminder.ui.adapter.IntentActionAdapter
+import com.intentaction.reminder.ui.viewmodel.IntentActionViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.intentaction.reminder.ui.components.AddIntentActionDialog
 import dagger.hilt.android.AndroidEntryPoint

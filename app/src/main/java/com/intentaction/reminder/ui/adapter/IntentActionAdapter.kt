@@ -1,4 +1,4 @@
-package com.intentaction.reminder.adapter
+package com.intentaction.reminder.ui.adapter
 
 
 import android.os.Build
@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.intentaction.reminder.R
-import com.intentaction.reminder.db.converters.DateTimeConverter
-import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.viewmodel.IntentActionViewModel
+import com.intentaction.reminder.data.converters.DateTimeConverter
+import com.intentaction.reminder.data.entity.IntentAction
+import com.intentaction.reminder.ui.viewmodel.IntentActionViewModel
 
 class IntentActionAdapter(private val viewModel: IntentActionViewModel) :
     ListAdapter<IntentAction, IntentActionAdapter.IntentViewHolder>(IntentsComparator()) {
@@ -43,7 +43,7 @@ class IntentActionAdapter(private val viewModel: IntentActionViewModel) :
             intentNameView.text = intentAction?.name
             intentStatusView.text = intentAction?.status
             intentQuoteView.text = intentAction?.quote
-            intentDueDateView.text = DateTimeConverter.fromZonedDateTime(intentAction?.dueDate) // This should be converted to a string
+            intentDueDateView.text = DateTimeConverter.fromZonedDateTime(intentAction?.dueDate)
             intentCategoryView.text = intentAction?.category
             editButton.setOnClickListener {
                 viewModel.updateIntent(intentAction)

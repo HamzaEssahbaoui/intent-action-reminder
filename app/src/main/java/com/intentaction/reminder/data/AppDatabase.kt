@@ -1,11 +1,12 @@
-package com.intentaction.reminder.db
+package com.intentaction.reminder.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.intentaction.reminder.db.converters.Converters
-import com.intentaction.reminder.db.dao.ActionIntentDao
-import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.data.converters.Converters
+import com.intentaction.reminder.data.converters.DateTimeConverter
+import com.intentaction.reminder.data.dao.ActionIntentDao
+import com.intentaction.reminder.data.entity.IntentAction
 
 @Database(
     entities = [IntentAction::class],

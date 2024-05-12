@@ -1,7 +1,7 @@
-package com.intentaction.reminder.repository
+package com.intentaction.reminder.data.repository
 
 import androidx.lifecycle.LiveData
-import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.data.entity.IntentAction
 
 interface IntentRepository {
 

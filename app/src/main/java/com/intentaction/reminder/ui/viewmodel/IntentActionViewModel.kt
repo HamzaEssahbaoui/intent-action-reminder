@@ -1,4 +1,4 @@
-package com.intentaction.reminder.viewmodel
+package com.intentaction.reminder.ui.viewmodel
 
 import android.os.Build
 import android.util.Log
@@ -6,9 +6,9 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.repository.IntentRepository
-import com.intentaction.reminder.services.SchedulerService
+import com.intentaction.reminder.data.entity.IntentAction
+import com.intentaction.reminder.data.repository.IntentRepository
+import com.intentaction.reminder.data.services.SchedulerService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

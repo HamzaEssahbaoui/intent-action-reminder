@@ -1,4 +1,4 @@
-package com.intentaction.reminder.db.converters
+package com.intentaction.reminder.data.converters
 
 import android.content.Context
 import android.os.Build
@@ -87,9 +87,9 @@ class DateTimeConverter private constructor() {
         @RequiresApi(Build.VERSION_CODES.O)
         @JvmStatic
         @TypeConverter
-        fun fromMillisToZoneDateTime(millis: Long?, zoneId: ZoneId = ZoneId.systemDefault()): ZonedDateTime? {
+        fun fromMillisToZoneDateTime(millis: Long?): ZonedDateTime? {
             return millis?.let {
-                Instant.ofEpochMilli(it).atZone(zoneId)
+                Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault())
             }
         }
 
@@ -107,7 +107,7 @@ class DateTimeConverter private constructor() {
         @TypeConverter
         fun toZonedDateTime(time: String?): ZonedDateTime? {
             return if (time.isNullOrEmpty()) null
-            else ZonedDateTime.parse(time)
+            else ZonedDateTime.parse(time,DateTimeFormatter.ISO_ZONED_DATE_TIME)
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -118,6 +118,7 @@ class DateTimeConverter private constructor() {
                 DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(zonedDateTime)
             else null
         }
+
 
         @RequiresApi(Build.VERSION_CODES.O)
         @JvmStatic

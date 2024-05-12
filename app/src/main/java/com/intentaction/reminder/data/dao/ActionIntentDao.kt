@@ -1,4 +1,4 @@
-    package com.intentaction.reminder.db.dao
+    package com.intentaction.reminder.data.dao
 
     import androidx.lifecycle.LiveData
     import androidx.room.Dao
@@ -7,7 +7,7 @@
     import androidx.room.OnConflictStrategy
     import androidx.room.Query
     import androidx.room.Update
-    import com.intentaction.reminder.db.entity.IntentAction
+    import com.intentaction.reminder.data.entity.IntentAction
 
     @Dao
     interface ActionIntentDao {

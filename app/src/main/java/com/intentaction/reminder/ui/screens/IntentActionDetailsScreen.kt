@@ -1,13 +1,12 @@
 package com.intentaction.reminder.ui.screens
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.intentaction.reminder.R
-import com.intentaction.reminder.viewmodel.IntentActionViewModel
+import com.intentaction.reminder.ui.viewmodel.IntentActionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

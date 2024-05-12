@@ -1,9 +1,9 @@
 [versions]
 agp = "8.3.2"
-hiltAndroid = "2.48"
-hiltAndroidCompiler = "2.48"
+hiltAndroid = "2.49"
+hiltAndroidCompiler = "2.49"
 hiltLifecycleViewmodel = "1.0.0-alpha03"
-kotlin = "1.9.0"
+kotlin = "1.9.23"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -16,6 +16,7 @@ roomRuntime = "2.6.1"
 workRuntimeKtx = "2.9.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
+jvmTarget = "2.0.0-RC3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,4 +42,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hiltAndroidPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidCompiler" }
+jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jvmTarget" }
+ksp = { id = "com.google.devtools.ksp", version = "1.8.10-1.0.9" }
+
 

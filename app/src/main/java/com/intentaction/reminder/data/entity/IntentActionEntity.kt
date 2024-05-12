@@ -1,9 +1,7 @@
-package com.intentaction.reminder.db.entity
+package com.intentaction.reminder.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.intentaction.reminder.db.converters.DateTimeConverter
 import java.time.ZonedDateTime
 
 @Entity(tableName = "intent_actions" )

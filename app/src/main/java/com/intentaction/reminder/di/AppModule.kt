@@ -1,14 +1,14 @@
-package com.intentaction.reminder
+package com.intentaction.reminder.di
 
 
 import android.content.Context
 import androidx.room.Room
-import com.intentaction.reminder.db.AppDatabase
-import com.intentaction.reminder.db.dao.ActionIntentDao
-import com.intentaction.reminder.repository.IntentRepository
-import com.intentaction.reminder.repository.IntentRepositoryImpl
-import com.intentaction.reminder.services.SchedulerService
-import com.intentaction.reminder.services.SchedulerServiceImpl
+import com.intentaction.reminder.data.AppDatabase
+import com.intentaction.reminder.data.dao.ActionIntentDao
+import com.intentaction.reminder.data.repository.IntentRepository
+import com.intentaction.reminder.data.repository.IntentRepositoryImpl
+import com.intentaction.reminder.data.services.SchedulerService
+import com.intentaction.reminder.data.services.SchedulerServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface DatabaseModule {
+internal interface AppModule {
 
     @Binds
     fun intentRepository(

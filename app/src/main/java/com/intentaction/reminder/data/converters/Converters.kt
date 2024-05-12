@@ -1,23 +1,16 @@
-package com.intentaction.reminder.db.converters
+package com.intentaction.reminder.data.converters
 
 // Example type converter
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Converters {
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
@@ -30,4 +23,6 @@ class Converters {
     fun toZonedDateTime(data: String?): ZonedDateTime? {
         return if (data == null) null else ZonedDateTime.parse(data, DateTimeFormatter.ISO_ZONED_DATE_TIME)
     }
+
+
 }

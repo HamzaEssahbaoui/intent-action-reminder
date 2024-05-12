@@ -13,9 +13,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.intentaction.reminder.R
-import com.intentaction.reminder.db.converters.DateTimeConverter
-import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.viewmodel.IntentActionViewModel
+import com.intentaction.reminder.data.converters.DateTimeConverter
+import com.intentaction.reminder.data.entity.IntentAction
+import com.intentaction.reminder.ui.viewmodel.IntentActionViewModel
 import java.time.ZonedDateTime
 import java.util.*
 

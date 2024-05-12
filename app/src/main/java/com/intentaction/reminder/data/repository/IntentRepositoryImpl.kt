@@ -1,11 +1,11 @@
-package com.intentaction.reminder.repository
+package com.intentaction.reminder.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
-import com.intentaction.reminder.db.dao.ActionIntentDao
-import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.services.SchedulerService
+import com.intentaction.reminder.data.dao.ActionIntentDao
+import com.intentaction.reminder.data.entity.IntentAction
+import com.intentaction.reminder.data.services.SchedulerService
 import javax.inject.Inject
 
 internal class IntentRepositoryImpl @Inject constructor(

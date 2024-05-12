@@ -1,4 +1,4 @@
-package com.intentaction.reminder.services
+package com.intentaction.reminder.data.services
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,9 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.intentaction.reminder.db.converters.DateTimeConverter
-import com.intentaction.reminder.db.entity.IntentAction
-import com.intentaction.reminder.receivers.ReminderBroadcastReceiver
+import com.intentaction.reminder.data.converters.Converters
+import com.intentaction.reminder.data.converters.DateTimeConverter
+import com.intentaction.reminder.data.entity.IntentAction
+import com.intentaction.reminder.data.receivers.ReminderBroadcastReceiver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

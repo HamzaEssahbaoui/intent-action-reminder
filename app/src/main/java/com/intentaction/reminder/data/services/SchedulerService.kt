@@ -1,6 +1,6 @@
-package com.intentaction.reminder.services
+package com.intentaction.reminder.data.services
 
-import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.data.entity.IntentAction
 
 interface SchedulerService {
 

@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.intentaction.reminder.db.entity.IntentAction
+import com.intentaction.reminder.data.entity.IntentAction
 import com.intentaction.reminder.ui.screens.IntentActionDetailsScreen
 
 object NotificationUtils {
@@ -32,7 +32,7 @@ object NotificationUtils {
             context,
             intentAction!!.id,
             notificationIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0)
+            PendingIntent.FLAG_UPDATE_CURRENT or (PendingIntent.FLAG_IMMUTABLE)
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
